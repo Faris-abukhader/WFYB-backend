@@ -136,11 +136,11 @@ commentObj = {
 
 
 module.exports = {
-userObj,
-starterObj,
-backerObj,
-projectObj,
-rewardObj,
-pledgeObj,
-commentObj,
+    userObj,
+    starterObj,
+    backerObj,
+    projectObj,
+    rewardObj,
+    pledgeObj,
+    commentObj,
 }

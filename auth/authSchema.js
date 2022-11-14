@@ -3,10 +3,12 @@ const {
   signIn,
   verify,
   resendVerifyingEmail,
+  updateOneUser
 } =  require('./authController')
 
 const {userObj} = require('../util/schemaContainer')
 const { websiteMiddleware } = require('../preValidation/websiteMiddleware')
+const { userMiddleware } = require('../preValidation/userMiddleware')
 
 
 const signUpSchema = {
@@ -29,7 +31,6 @@ const signUpSchema = {
       },
       preValidation:websiteMiddleware,
       handler:signUp
-
 }
 
 
@@ -84,10 +85,31 @@ const resendVerifyingEmailSchema = {
 }
 
 
+const updateOneUserSchema = {
+  schema: {
+    tags: ['auth'],
+      body: {
+        type: 'object',
+        required: ['firstName','lastName'],
+        properties:{
+          nationality : {type:'string'},
+          avatar : {type:'string'},
+          firstName : {type:'string'},
+          lastName : {type:'string'},
+        }
+      },
+      response:{
+          200:userObj
+      }
+    },
+    preValidation:userMiddleware,
+    handler:updateOneUser
+}
 
 module.exports = {
     signUpSchema,
     signInSchema,
     verifySchema,
     resendVerifyingEmailSchema,
+    updateOneUserSchema,
 }

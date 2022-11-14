@@ -1,4 +1,8 @@
+const { PrismaClient } = require("@prisma/client")
+const prisma = new PrismaClient()
 const Fastify = require('fastify')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const PORT = process.env.PORT || 4500
 const fastify = Fastify({logger: true})
 const { docOptions } = require('./util/docGeneratorOptions')
@@ -14,7 +18,9 @@ try{
 }
 
 // routes . . . 
-fastify.register(require('./route/todo'),{ prefix: '/todo' })
+fastify.register(require('./auth/authRoute'),{ prefix: '/auth' })
+fastify.register(require('./starter/starterRoute'),{ prefix: '/starter' })
+fastify.register(require('./project/projectRoute'),{ prefix: '/project' })
 
 
 const start = async () => {
@@ -26,4 +32,37 @@ const start = async () => {
   }
 }
 start()
+
+const createStarter = async()=>{
+  const password =  bcrypt.hashSync('12345', 10);
+  const starter = await prisma.user.create({
+    data:{
+      firstName:'fares',
+      lastName:'abukhader',
+      email:'fares@yahoo.com',
+      password,
+      accountType:'s',
+      token:'',
+      avatar:'avatar-1.svg',
+      starter:{
+        create:{
+          shortIntro:''
+        }
+      }
+    }
+  })
+
+  const token = jwt.sign({id:starter.id},process.env.JWT_SECRET)
+
+  const target = await prisma.user.update({
+    where:{
+      id:starter.id,
+    },
+    data:{
+      token
+    }
+  })
+  console.log(target)
+}
+// createStarter()
 

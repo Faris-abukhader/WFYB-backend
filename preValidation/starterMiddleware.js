@@ -6,6 +6,7 @@ const starterMiddleware = async(req,res,next)=>{
     const token = req.headers.token
     let starterId = null
 
+
     // if there is not token at the header refuse the request -> Unauthorized request
     if(!token) res.code(401).send({stateCode:401,message:"Unauthorized request"}) 
 
@@ -19,9 +20,11 @@ const starterMiddleware = async(req,res,next)=>{
     try{
       const targetStarter = await prisma.starter.findUnique({
           where:{
-              id:starterId,
+              userId:starterId,
           }
       }) 
+
+      console.log(targetStarter)
 
       // if the user is not exist refuse the request  -> Unauthorized request
       if(!targetStarter) throw 'Unauthorized request.'

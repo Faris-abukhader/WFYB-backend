@@ -1,6 +1,12 @@
 const {   
-    todoObj,
-  } = require('../schema/todoSchema')
+  userObj,
+  starterObj,
+  backerObj,
+  projectObj,
+  rewardObj,
+  pledgeObj,
+  commentObj,  
+  } = require('./schemaContainer')
   
 
 const docOptions = {
@@ -15,10 +21,22 @@ const docOptions = {
       consumes: ['application/json'],
       produces: ['application/json'],
       tags: [
-        { name: 'todo', description: 'Todo related end-points' },
+        { name: 'user', description: 'User or auth related end-points' },
+        { name: 'starter', description: 'Starter related end-points' },
+        { name: 'backer', description: 'Backer related end-points' },
+        { name: 'project', description: 'Project related end-points' },
+        { name: 'reward', description: 'Reward related end-points' },
+        { name: 'pledge', description: 'Pledge related end-points' },
+        { name: 'comment', description: 'Comment related end-points' },
       ],
       definitions: {
-        Todo:todoObj,
+        User:userObj,
+        Starter:starterObj,
+        Backer:backerObj,
+        Project:projectObj,
+        Reward:rewardObj,
+        Pledge:pledgeObj,
+        Comment:commentObj,
       },
     },
     uiConfig: {

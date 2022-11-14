@@ -193,9 +193,57 @@ const verify = async(req,reply)=>{
     }
 }
 
+
+const updateOneUser = async(req,reply)=>{
+    try{
+    
+      // ectracting the user id from request params
+      const {id} = req.params
+
+      // extracting  the data from request body
+      const {firstName,lastName,nationality,avatar} = req.body
+
+      // checking if the email is exist or not 
+      const targetUser = await prisma.user.update({
+          where:{
+              id,
+          },
+          data:{
+            firstName,
+            lastName,
+            nationality,
+            avatar
+          },
+          include:{ 
+              starter:true,
+              backer:true
+          }
+      })
+
+      // extract one one accout
+      let tempUser = targetUser
+      if(tempUser.accountType=='s'){
+          delete tempUser.backer
+      }else{
+          delete tempUser.starter
+      }
+
+      // return the user 
+      reply.send(tempUser)
+  
+    }catch(err){
+      console.log(err)
+      reply.send(err) 
+    }
+
+}
+
+
+
 module.exports = {
     signUp,
     signIn,
     verify,
     resendVerifyingEmail,
+    updateOneUser,
 }
