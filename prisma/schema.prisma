@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["debian-openssl-1.1.x", "darwin"]
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String
+  password      String
+  firstName     String
+  lastName      String
+  nationality   String?
+  avatar        String
+  accountType   String
+  isVerified    Boolean?
+  verifiedDate  DateTime?
+  token         String
+  createdAt     DateTime @default(now())
+  lastUpdate    DateTime @updatedAt
+  starter       Starter?
+  backer        Backer?
+  @@index([id])
+}
+
+model Starter {
+  userId            String   @id @default(cuid())
+  user              User @relation(fields: [userId],references: [id])
+  shortIntro        String @db.Text
+  projects          Project[]
+}
+
+model Backer {
+  userId            String   @id @default(cuid())
+  user              User @relation(fields: [userId],references: [id])
+  comments          Comment[]
+  pledges           Pledge[]
+  
+}
+
+model Project {
+  id                     String   @id @default(cuid())
+  ownerId                String
+  owner                  Starter @relation(fields: [ownerId],references: [userId])
+  category               String 
+  country                String
+  title                  String
+  description            String
+  shortIntro             String
+  projectImage           String
+  compaignDurationEnd    DateTime
+  fundingGoal            String
+  rewardList             Reward[]
+  risksAndChallenges     String
+  projectType            String
+  comments               Comment[]
+  pledgeList             Pledge[]
+}
+
+model Reward {
+  id                     String   @id @default(cuid())
+  projectId              String
+  project                Project @relation(fields: [projectId],references: [id])
+  title                  String
+  amount                 Decimal
+  description            String
+  pledges                Pledge[]
+}
+
+model Pledge {
+  id                     String   @id @default(cuid())
+  projectId              String
+  project                Project @relation(fields: [projectId],references: [id])
+  backerId               String
+  backer                 Backer @relation(fields: [backerId],references: [userId])
+  rewardId               String?
+  reward                 Reward? @relation(fields: [rewardId],references: [id])
+  country                String
+  amount                 Decimal
+}
+
+model Comment {
+  id                     String   @id @default(cuid())
+  projectId              String
+  project                Project @relation(fields: [projectId],references: [id])
+  backerId               String
+  backer                 Backer @relation(fields: [backerId],references: [userId])
+  content                String
+  createdAt              DateTime @default(now())
+              
+}
+
