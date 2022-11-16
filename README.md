@@ -241,4 +241,4 @@ http://localhost:4500/doc
 
 ## 📜 License
 
-This software is licensed under the [MIT](https://github.com/Faris-abukhader/we-work-backend/blob/master/LICENSE) © [FaRiS](https://github.com/Faris-abukhader).
+This software is licensed under the [MIT](https://github.com/Faris-abukhader/WFYB-backend/blob/master/license) © [FaRiS](https://github.com/Faris-abukhader).
