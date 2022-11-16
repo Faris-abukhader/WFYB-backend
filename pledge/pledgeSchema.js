@@ -8,7 +8,7 @@ const { backerMiddleware } = require('../preValidation/backerMiddleware')
 
 const createNewPledgeSchema = {
     schema: {
-      tags: ['comment'],
+      tags: ['pledge'],
         body: {
           type: 'object',
           required: ['projectId','backerId','content'],
