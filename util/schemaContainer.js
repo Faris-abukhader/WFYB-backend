@@ -5,6 +5,7 @@ var projectObj = {}
 var rewardObj = {}
 var pledgeObj = {}
 var commentObj = {}
+var replyObj = {}
 
 userObj = {
     type:'object',
@@ -134,8 +135,20 @@ commentObj = {
        createdAt: {type:'string'},
    }
 }
-   
 
+
+replyObj = {
+    type:'object',
+    properties:{
+        id: {type:'string'},
+        commentId: {type:'string'},
+        comment :commentObj,
+        ownerId: {type:'string'},
+        owner:userObj,
+        content: {type:'string'},
+        createdAt: {type:'string'},
+    }
+ }
 
 module.exports = {
     userObj,
@@ -145,4 +158,5 @@ module.exports = {
     rewardObj,
     pledgeObj,
     commentObj,
+    replyObj
 }

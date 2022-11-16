@@ -148,7 +148,19 @@ const getAllProjects = async(req,reply)=>{
                       }, 
                     }
                   },
-                  content:true
+                  content:true,
+                  replies:{
+                    select:{
+                      id:true,
+                      owner:{
+                        select:{
+                          firstName:true,
+                          lastName:true,
+                        }
+                      },
+                      content:true
+                    }
+                  }
                 },
                 take:50
               }
@@ -216,8 +228,20 @@ const getOneStarterAllProjects = async(req,reply)=>{
                   },
                   content:true
                 },
-                take:50
-              }
+                take:50,
+                replies:{
+                  select:{
+                    id:true,
+                    owner:{
+                      select:{
+                        firstName:true,
+                        lastName:true,
+                      }
+                    },
+                    content:true
+                  }
+                }
+              },
             } 
         })   
         reply.send({data,pageNumber:Math.ceil(length/projectRange)}) 
@@ -283,7 +307,19 @@ const searchProject = async(req,reply)=>{
                   },
                   content:true
                 },
-                take:50
+                take:50,
+                replies:{
+                  id:true,
+                  select:{
+                    owner:{
+                      select:{
+                        firstName:true,
+                        lastName:true,
+                      }
+                    },
+                    content:true
+                  }
+                }
               }
             }
         })   
