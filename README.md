@@ -51,12 +51,12 @@ WeWork API also provide Conversation route where users can be in touch through m
 5. Change the current working directory to the location where you want the cloned directory.
 6. Type git clone, and then paste the URL you copied earlier.
 ```
-git clone github.com/Faris-abukhader/we-work-backend
+git clone github.com/Faris-abukhader/WFYB-backend
 ```
 Press Enter to create your local clone
 ```
 git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
-> Cloning into `we-work-backend`...
+> Cloning into `WFYB-backend`...
 > remote: Counting objects: 10, done.
 > remote: Compressing objects: 100% (8/8), done.
 > remove: Total 10 (delta 1), reused 10 (delta 1)
@@ -110,7 +110,7 @@ DATABASE_URL="mysql://<USERNAME>:<YOUR_PASSWORD>@localhost:3306/<DB_NAME>?schema
 Now you need to step up Prisma ORM , type in your terminal :
 ```
 cd prisma 
-prisma generate
+prisma migrate dev
 ```
 
 To run the project just type down in terminal :
@@ -125,81 +125,50 @@ npm run dev
 ## <img src="https://cdn-icons-png.flaticon.com/512/535/535471.png" width="25" height="25" style="padding-right:15px">  Project structure  
 
 ```
-📦WeWork-backend
+📦WFYB-backend 
  ┣ 📂auth
  ┃ ┣ 📜authController.js
  ┃ ┣ 📜authRoute.js
  ┃ ┗ 📜authSchema.js
- ┣ 📂certification
- ┃ ┣ 📜certificationController.js
- ┃ ┣ 📜certificationRoute.js
- ┃ ┗ 📜certificationSchema.js
- ┣ 📂conversation
- ┃ ┣ 📜conversationController.js
- ┃ ┣ 📜conversationRoute.js
- ┃ ┗ 📜conversationSchema.js
- ┣ 📂education
- ┃ ┣ 📜educationController.js
- ┃ ┣ 📜educationRoute.js
- ┃ ┗ 📜educationSchema.js
- ┣ 📂employer
- ┃ ┣ 📜employerController.js
- ┃ ┣ 📜employerRoute.js
- ┃ ┗ 📜employerSchema.js
- ┣ 📂employmentHistory
- ┃ ┣ 📜employmentHistoryController.js
- ┃ ┣ 📜employmentHistoryRoute.js
- ┃ ┗ 📜employmentHistorySchema.js
- ┣ 📂freelancer
- ┃ ┣ 📜freelancerController.js
- ┃ ┣ 📜freelancerRoute.js
- ┃ ┗ 📜freelancerSchema.js
- ┣ 📂hiringRequest
- ┃ ┣ 📜hiringRequestController.js
- ┃ ┣ 📜hiringRequestRoute.js
- ┃ ┗ 📜hiringRequestSchema.js
- ┣ 📂job
- ┃ ┣ 📜jobController.js
- ┃ ┣ 📜jobRoute.js
- ┃ ┗ 📜jobSchema.js
- ┣ 📂language
- ┃ ┣ 📜languageController.js
- ┃ ┣ 📜languageRoute.js
- ┃ ┗ 📜languageSchema.js
- ┣ 📂message
- ┃ ┣ 📜messageController.js
- ┃ ┣ 📜messageRoute.js
- ┃ ┗ 📜messageSchema.js
-  ┣ 📂preValidation
- ┃ ┣ 📜employerMiddleware.js
- ┃ ┣ 📜freelancerMiddleware.js
+ ┣ 📂comment
+ ┃ ┣ 📜commentController.js
+ ┃ ┣ 📜commentRoute.js
+ ┃ ┗ 📜commentSchema.js 
+ ┣ 📂pledge
+ ┃ ┣ 📜pledgeController.js
+ ┃ ┣ 📜pledgeRoute.js
+ ┃ ┗ 📜pledgeSchema.js
+ ┣ 📂preValidation
+ ┃ ┣ 📜backerMiddleware.js
+ ┃ ┣ 📜starterMiddleware.js
+ ┃ ┣ 📜userMiddleware.js
  ┃ ┗ 📜websiteMiddleware.js
  ┣ 📂prisma
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂20220928063002_init
- ┃ ┃ ┃ ┗ 📜migration.sql
- ┃ ┃ ┗ 📜migration_lock.toml
  ┃ ┗ 📜schema.prisma
- ┣ 📂product
- ┃ ┣ 📜productController.js
- ┃ ┣ 📜productRoute.js
- ┃ ┗ 📜productSchema.js
- ┣ 📂proposal
- ┃ ┣ 📜proposalController.js
- ┃ ┣ 📜proposalRoute.js
- ┃ ┗ 📜proposalSchema.js
+ ┣ 📂project
+ ┃ ┣ 📜projectController.js
+ ┃ ┣ 📜projectRoute.js
+ ┃ ┗ 📜projectSchema.js
+ ┣ 📂reply
+ ┃ ┣ 📜replyController.js
+ ┃ ┣ 📜replyRoute.js
+ ┃ ┗ 📜replySchema.js
+ ┣ 📂starter
+ ┃ ┣ 📜starterController.js
+ ┃ ┣ 📜starterRoute.js
+ ┃ ┗ 📜starterSchema.js
  ┣ 📂util
  ┃ ┣ 📂emailConfig
  ┃ ┃ ┣ 📂templates
- ┃ ┃ ┃ ┣ 📜.DS_Store
  ┃ ┃ ┃ ┣ 📜resetPassword.html
  ┃ ┃ ┃ ┗ 📜verify.html
  ┃ ┃ ┣ 📜emailConfig.js
  ┃ ┃ ┣ 📜script.js
  ┃ ┃ ┗ 📜sendInBlue.js
- ┃ ┣ 📜docGenerator.js
+ ┃ ┣ 📜docGeneratorOptions.js
  ┃ ┣ 📜paginationRange.js
  ┃ ┗ 📜schemaContainer.js
+ ┣ 📜.env
  ┣ 📜.gitignore
  ┣ 📜app.js
  ┣ 📜package-lock.json
@@ -216,7 +185,6 @@ http://localhost:4500/doc
 - Authentications , authorizations are all implemented with differents layers , check Prevalidation folder .
 - Credentials is all well encoded before it saves to DB.
 - Custom implementation of verify account by email 
-- Realtime messaging using Socket.IO (coming soon) 
 
 
 
