@@ -25,17 +25,30 @@ WFYB
 ## <img src="https://cdn-icons-png.flaticon.com/512/1436/1436664.png" width="25" height="25" style="padding-right:15px">  Introduction 
 
 <p>
-WeWork is an open source freelancing platform , where is consist of two parts , first part is Backend which you are reading now and the other part is Frontend . In this part we gonna design our DB and create secure connection (using JWT) through our API to frontend , where users , request , jobs info all gonna be saved.
-<br/>
-This API gonna cover the authentication part , which includes SignIn, JWT , SignUp , email verification.
-<br/>
-In this API under user we have two accounts type , first is freelancer second is employer .
-</br>
-Employers can publish there own jobs , then freelancer can provides there proposals , employers can accept or decline the proposals , once proposal is accepted one recruiting request gonna be send to freelancer , if both side accept the request the job goona be closed ; also the employer can send request to specific freelancer direclty without waiting for proposal.
-</br>
-Employer can rate freelancer for each job , and from here freelancer gonna get his average rate.
-WeWork API also provide Conversation route where users can be in touch through messages between them.
-</br>
+We fund your project (WFYB) is a platform where any starter ( ideas owner) who’s looking for investors to his/her project can use this platform , create his project , then the backer (investor) will back his/her project.
+
+This project consist of two parts , front-end , and backend which you are reading right now .
+
+This restful API has in total 6 different routes , each route has some paths , let’s take a general look about these routes.
+
+- <b>User</b> :
+We have five different paths , two pasts for signIn and signUp paths, one get path for verify , and one get path for resend verify email , and last one is put path for update user attributes.
+
+- <b>Starter</b>:
+We only has one path which his put , which only update or modify shortIntro for starter , you can add more attributes for your starter model.
+
+- <b>Project</b> :
+Under this route we have six paths , main three post , put and delete paths , and three different get paths , all to get all project exist in DB , starter to get one starter all projects , search to get result of searching existing projects by it’s title.
+
+- <b>Pledge</b>:
+We only have one post path , where backer(investor) can create a pledge to one specific project.
+
+- <b>Comment</b> :
+Under this route we have three main paths , post , put and delete , here I need to mention that comments only available for backer who already invested in the target project . 
+
+- <b>Reply</b>:
+This route is very similar to comment route , has three main paths post , put and delete , but in this route only the stater (project owner) can reply on backer’s comments.
+
 
 </p>
 
