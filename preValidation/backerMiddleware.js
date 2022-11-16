@@ -27,6 +27,7 @@ const backerMiddleware = async(req,res,next)=>{
       if(!targetBacker) throw 'Unauthorized request.'
 
     }catch(err){
+      console.log('error is here')
       console.log(err)
       res.code(401).send({stateCode:401,message:"Unauthorized request"}) 
   }     

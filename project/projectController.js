@@ -4,7 +4,7 @@ const {projectRange} = require('../util/paginationRange')
 
 const createNewProject = async(req,reply)=>{
   try{
-    const {ownerId,category,country,title,description,shortIntro,projectImage,compaignDurationEnd,fundingGoal,rewardList,risksAndChallenges,projectType} = request.body
+    const {ownerId,category,country,title,description,shortIntro,projectImage,compaignDurationEnd,fundingGoal,rewardList,risksAndChallenges,projectType} = req.body
 
     let data = {
       owner:{
@@ -51,7 +51,7 @@ const createNewProject = async(req,reply)=>{
 const updateOneProject = async(req,reply)=>{
   try{
     const {id} = req.params
-    const {category,country,title,description,shortIntro,projectImage,compaignDurationEnd,fundingGoal,rewardList,risksAndChallenges,projectType} = request.body
+    const {category,country,title,description,shortIntro,projectImage,compaignDurationEnd,fundingGoal,rewardList,risksAndChallenges,projectType} = req.body
 
     let data = {
       category,
@@ -125,6 +125,34 @@ const getAllProjects = async(req,reply)=>{
         const data = await prisma.project.findMany({
             take:projectRange,
             skip:toSkip ? (pageNo-1)*projectRange:0, 
+            include:{
+              _count:{
+                select:{
+                  pledgeList:true
+                }
+              },
+              pledgeList:{
+                select:{
+                  amount:true
+                }
+              },
+              comments:{
+                select:{
+                  backer:{
+                    select:{
+                      user:{
+                        select:{
+                          firstName:true,
+                          lastName:true
+                        }
+                      }, 
+                    }
+                  },
+                  content:true
+                },
+                take:50
+              }
+            }
         })   
         reply.send({data,pageNumber:Math.ceil(length/projectRange)}) 
     })
@@ -162,7 +190,35 @@ const getOneStarterAllProjects = async(req,reply)=>{
               }
             },
             take:projectRange,
-            skip:toSkip ? (pageNo-1)*projectRange:0, 
+            skip:toSkip ? (pageNo-1)*projectRange:0,
+            include:{
+              _count:{
+                select:{
+                  pledgeList:true
+                }
+              },
+              pledgeList:{
+                select:{
+                  amount:true
+                }
+              },
+              comments:{
+                select:{
+                  backer:{
+                    select:{
+                      user:{
+                        select:{
+                          firstName:true,
+                          lastName:true
+                        }
+                      }, 
+                    }
+                  },
+                  content:true
+                },
+                take:50
+              }
+            } 
         })   
         reply.send({data,pageNumber:Math.ceil(length/projectRange)}) 
     })
@@ -177,6 +233,8 @@ const getOneStarterAllProjects = async(req,reply)=>{
 const searchProject = async(req,reply)=>{
   try{
     const {title} = req.query
+
+    console.log(title)
 
     let pageNo = 0
     let toSkip = false
@@ -200,6 +258,34 @@ const searchProject = async(req,reply)=>{
             },
             take:projectRange,
             skip:toSkip ? (pageNo-1)*projectRange:0, 
+            include:{
+              _count:{
+                select:{
+                  pledgeList:true
+                }
+              },
+              pledgeList:{
+                select:{
+                  amount:true
+                }
+              },
+              comments:{
+                select:{
+                  backer:{
+                    select:{
+                      user:{
+                        select:{
+                          firstName:true,
+                          lastName:true
+                        }
+                      }, 
+                    }
+                  },
+                  content:true
+                },
+                take:50
+              }
+            }
         })   
         reply.send({data,pageNumber:Math.ceil(length/projectRange)}) 
     })

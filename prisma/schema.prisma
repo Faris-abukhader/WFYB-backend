@@ -26,6 +26,7 @@ model User {
   lastUpdate    DateTime @updatedAt
   starter       Starter?
   backer        Backer?
+  replies       Reply[]
   @@index([id])
 }
 
@@ -61,6 +62,8 @@ model Project {
   projectType            String
   comments               Comment[]
   pledgeList             Pledge[]
+  createdAt     DateTime @default(now())
+  lastUpdate    DateTime @updatedAt
 }
 
 model Reward {
@@ -92,7 +95,16 @@ model Comment {
   backerId               String
   backer                 Backer @relation(fields: [backerId],references: [userId])
   content                String
-  createdAt              DateTime @default(now())
-              
+  replies                Reply[]
+  createdAt              DateTime @default(now())         
 }
 
+model Reply {
+  id                     String   @id @default(cuid())
+  commentId              String
+  comment                Comment @relation(fields: [commentId],references: [id])
+  ownerId                String
+  owner                  User @relation(fields: [ownerId],references: [id])
+  content                String
+  createdAt              DateTime @default(now())         
+}

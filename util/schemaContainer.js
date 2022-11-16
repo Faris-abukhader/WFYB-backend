@@ -74,6 +74,8 @@ projectObj = {
         fundingGoal: {type:'string'},
         risksAndChallenges: {type:'string'},
         projectType: {type:'string'},
+        createdAt: {type:'string'},  
+        lastUpdate: {type:'string'},    
         rewardList: {
             type:'array',
             items:rewardObj

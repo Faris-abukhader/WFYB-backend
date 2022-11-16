@@ -21,6 +21,8 @@ try{
 fastify.register(require('./auth/authRoute'),{ prefix: '/auth' })
 fastify.register(require('./starter/starterRoute'),{ prefix: '/starter' })
 fastify.register(require('./project/projectRoute'),{ prefix: '/project' })
+fastify.register(require('./pledge/pledgeRoute'),{ prefix: '/pledge' })
+fastify.register(require('./comment/commentRoute'),{ prefix: '/comment' })
 
 
 const start = async () => {
@@ -64,5 +66,37 @@ const createStarter = async()=>{
   })
   console.log(target)
 }
-// createStarter()
+const createbacker = async()=>{
+  const password =  bcrypt.hashSync('12345', 10);
+  const backer = await prisma.user.create({
+    data:{
+      firstName:'raed',
+      lastName:'abukhader',
+      email:'raed@yahoo.com',
+      password,
+      accountType:'b',
+      token:'',
+      avatar:'avatar-5.svg',
+      backer:{
+        create:{}
+      }
+    }
+  })
 
+  const token = jwt.sign({id:backer.id},process.env.JWT_SECRET)
+
+  const target = await prisma.user.update({
+    where:{
+      id:backer.id,
+    },
+    data:{
+      token
+    }
+  })
+  console.log(target)
+}
+
+// createStarter()
+// createbacker()
+
+// console.log(new Date())
