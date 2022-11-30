@@ -110,7 +110,7 @@ brew install node
 ```
 npm install 
 ```
-الان عليك عمل قاعد بيانات جديد sql ، بعد قيامك بذلك انشىء ملف جديد في المشروع باسم .gitignore واكتب بداخله :
+الان عليك عمل قاعد بيانات جديد sql ، بعد قيامك بذلك انشىء ملف جديد في المشروع باسم .env واكتب بداخله :
 ```
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
