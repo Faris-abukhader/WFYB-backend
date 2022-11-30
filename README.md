@@ -112,7 +112,7 @@ Go to project direct where  <package.json> is exist and type in terminal :
 ```
 npm install 
 ```
-Now you need to create DB server connection , after you create it , create .gitignore file and type :
+Now you need to create DB server connection , after you create it , create .env file and type :
 ```
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
