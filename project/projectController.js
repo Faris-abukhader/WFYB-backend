@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
-const {projectRange} = require('../util/paginationRange')
+const {projectRange,pledgeRange} = require('../util/paginationRange')
 
 const createNewProject = async(req,reply)=>{
   try{
@@ -332,6 +332,54 @@ const searchProject = async(req,reply)=>{
 
 }
 
+const getInvestedProjects = async(req,reply)=>{
+  try{
+
+    const {id} = req.params
+
+    console.log(id)
+
+    let pageNo = 0
+    let toSkip = false
+    if(req.params.pageNumber){
+      pageNo = req.params.pageNumber
+      toSkip = true
+    }
+
+    const data = await prisma.backer.findUnique({
+        where:{ 
+          userId:id
+        },
+        select:{
+          pledges:{
+            select:{
+              country:true,
+              amount:true,
+              project:{
+                select:{
+                  id:true,
+                  title:true,
+                  fundingGoal:true,
+                  _count:{
+                    select:{
+                      pledgeList:true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    })   
+    console.log(data)
+    reply.send(data) 
+
+  }catch(err){
+    console.log(err)
+    reply.send(err)
+  }
+}
+
 
 
 module.exports = {
@@ -340,5 +388,6 @@ module.exports = {
   deleteOneProject,
   getAllProjects,
   getOneStarterAllProjects,
-  searchProject
+  searchProject,
+  getInvestedProjects
 }

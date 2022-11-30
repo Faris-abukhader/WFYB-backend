@@ -4,10 +4,11 @@ const {
   deleteOneProjectSchema,
   getAllProjectsSchema,
   getOneStarterAllProjectsSchema,
-  searchProjectSchema
+  searchProjectSchema,
+  getInvestedProjectsSchema
 } = require('./projectSchema')
 
-const starterRoutes = async(fastify, options, done)=> {
+const projectRoutes = async(fastify, options, done)=> {
 
     fastify.post('/', createNewProjectSchema)
   
@@ -19,8 +20,10 @@ const starterRoutes = async(fastify, options, done)=> {
 
     fastify.get('/starter/:id/:pageNumber?', getOneStarterAllProjectsSchema)
 
+    fastify.get('/investedProject/:id/:pageNumber?', getInvestedProjectsSchema)
+
     fastify.get('/search/:pageNumber?', searchProjectSchema)
     
 }
   
-module.exports = starterRoutes
+module.exports = projectRoutes

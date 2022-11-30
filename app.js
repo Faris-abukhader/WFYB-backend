@@ -24,6 +24,7 @@ fastify.register(require('./project/projectRoute'),{ prefix: '/project' })
 fastify.register(require('./pledge/pledgeRoute'),{ prefix: '/pledge' })
 fastify.register(require('./comment/commentRoute'),{ prefix: '/comment' })
 fastify.register(require('./reply/replyRoute'),{ prefix: '/reply' })
+fastify.register(require('./bookmark/bookmarkRoute'),{ prefix: '/bookmark' })
 
 
 const start = async () => {

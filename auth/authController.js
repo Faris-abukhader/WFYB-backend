@@ -114,6 +114,9 @@ const signIn = async(req,reply)=>{
         // extracting  the data from request body
         const {email,password} = req.body
 
+        console.log('request is coming . . . ')
+        console.log(email,password)
+
         // checking if the email is exist or not 
         const targetUser = await prisma.user.findUnique({
             where:{
@@ -239,6 +242,49 @@ const updateOneUser = async(req,reply)=>{
 }
 
 
+const updateOneUserAvatar = async(req,reply)=>{
+    try{
+    
+      // ectracting the user id from request params
+      const {id} = req.params
+
+      // extracting  the data from request body
+      const {avatar} = req.body
+
+      // checking if the email is exist or not 
+      const targetUser = await prisma.user.update({
+          where:{
+              id,
+          },
+          data:{
+            avatar
+          },
+          include:{ 
+              starter:true,
+              backer:true
+          }
+      })
+
+      // extract one one accout
+      let tempUser = targetUser
+      if(tempUser.accountType=='s'){
+          delete tempUser.backer
+      }else{
+          delete tempUser.starter
+      }
+
+      // return the user 
+      reply.send(tempUser)
+  
+    }catch(err){
+      console.log(err)
+      reply.send(err) 
+    }
+
+}
+
+
+
 
 module.exports = {
     signUp,
@@ -246,4 +292,5 @@ module.exports = {
     verify,
     resendVerifyingEmail,
     updateOneUser,
+    updateOneUserAvatar
 }

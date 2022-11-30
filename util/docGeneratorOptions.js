@@ -30,6 +30,7 @@ const docOptions = {
         { name: 'reply', description: 'Reply related end-points' },
       ],
       definitions: {
+        User:userObj,
         Starter:starterObj,
         Backer:backerObj,
         Project:projectObj,

@@ -3,7 +3,8 @@ const {
   signInSchema,
   verifySchema,
   resendVerifyingEmailSchema,
-  updateOneUserSchema
+  updateOneUserSchema,
+  updateOneUserAvatarSchema
 } = require('./authSchema')
 
 const authRoutes = async(fastify, options, done)=> {
@@ -15,6 +16,8 @@ const authRoutes = async(fastify, options, done)=> {
     fastify.get('/verify',verifySchema)
 
     fastify.get('/resendVerifyEmail/:email',resendVerifyingEmailSchema)
+
+    fastify.put('/avatar/:id',updateOneUserAvatarSchema)
 
     fastify.put('/:id',updateOneUserSchema)
     

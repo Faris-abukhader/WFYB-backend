@@ -42,6 +42,7 @@ model Backer {
   user              User @relation(fields: [userId],references: [id])
   comments          Comment[]
   pledges           Pledge[]
+  bookmarks         Bookmark[]         
   
 }
 
@@ -62,6 +63,7 @@ model Project {
   projectType            String
   comments               Comment[]
   pledgeList             Pledge[]
+  bookmarks              Bookmark[]                  
   createdAt     DateTime @default(now())
   lastUpdate    DateTime @updatedAt
 }
@@ -106,5 +108,14 @@ model Reply {
   ownerId                String
   owner                  User @relation(fields: [ownerId],references: [id])
   content                String
+  createdAt              DateTime @default(now())         
+}
+
+model Bookmark{
+  id                     String   @id @default(cuid())
+  backerId               String
+  backer                 Backer @relation(fields: [backerId],references: [userId])
+  projectId              String
+  project                Project @relation(fields: [projectId],references: [id])
   createdAt              DateTime @default(now())         
 }

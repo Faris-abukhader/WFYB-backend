@@ -3,7 +3,8 @@ const {
   signIn,
   verify,
   resendVerifyingEmail,
-  updateOneUser
+  updateOneUser,
+  updateOneUserAvatar
 } =  require('./authController')
 
 const {userObj} = require('../util/schemaContainer')
@@ -106,10 +107,29 @@ const updateOneUserSchema = {
     handler:updateOneUser
 }
 
+const updateOneUserAvatarSchema = {
+  schema: {
+    tags: ['auth'],
+      body: {
+        type: 'object',
+        required: ['avatar'],
+        properties:{
+          avatar : {type:'string'},
+        }
+      },
+      response:{
+          200:userObj
+      }
+    },
+    preValidation:userMiddleware,
+    handler:updateOneUser
+}
+
 module.exports = {
     signUpSchema,
     signInSchema,
     verifySchema,
     resendVerifyingEmailSchema,
     updateOneUserSchema,
+    updateOneUserAvatarSchema
 }

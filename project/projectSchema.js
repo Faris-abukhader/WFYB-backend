@@ -4,12 +4,14 @@ const {
   deleteOneProject,
   getAllProjects,
   getOneStarterAllProjects,
-  searchProject
+  searchProject,
+  getInvestedProjects
 } =  require('./projectController')
 
-const { projectObj, rewardObj} = require('../util/schemaContainer')
+const { projectObj, rewardObj, backerObj} = require('../util/schemaContainer')
 const { starterMiddleware } = require('../preValidation/starterMiddleware')
 const { websiteMiddleware } = require('../preValidation/websiteMiddleware')
+const { backerMiddleware } = require('../preValidation/backerMiddleware')
 
 
 const createNewProjectSchema = {
@@ -153,6 +155,26 @@ const getOneStarterAllProjectsSchema = {
   handler:getOneStarterAllProjects
 }
 
+const getInvestedProjectsSchema = {
+  schema: {
+    tags: ['project'],
+      params: {
+        type: 'object',
+        required:['id'],
+        properties:{
+          id : {type:'string'},
+          pageNumber : {type:'integer'},
+        }
+      },
+      response:{
+        200:backerObj
+      },
+    },
+  preValidation:backerMiddleware,
+  handler:getInvestedProjects
+}
+
+
 
 const searchProjectSchema = {
   schema: {
@@ -188,6 +210,7 @@ module.exports = {
   deleteOneProjectSchema,
   getAllProjectsSchema,
   getOneStarterAllProjectsSchema,
-  searchProjectSchema
-,
+  searchProjectSchema,
+  getInvestedProjectsSchema
+
 }

@@ -6,6 +6,7 @@ var rewardObj = {}
 var pledgeObj = {}
 var commentObj = {}
 var replyObj = {}
+var bookmarkObj = {}
 
 userObj = {
     type:'object',
@@ -150,6 +151,18 @@ replyObj = {
     }
  }
 
+bookmarkObj = {
+    type:'object',
+    properties:{
+        id: {type:'string'},
+        backerId: {type:'string'},
+        backer :backerObj,
+        projectId: {type:'string'},
+        projec:projectObj,
+        createdAt: {type:'string'},
+    }
+}
+
 module.exports = {
     userObj,
     starterObj,
@@ -158,5 +171,6 @@ module.exports = {
     rewardObj,
     pledgeObj,
     commentObj,
-    replyObj
+    replyObj,
+    bookmarkObj
 }
