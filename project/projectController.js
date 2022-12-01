@@ -25,7 +25,7 @@ const createNewProject = async(req,reply)=>{
       projectType
     }
 
-    if (rewardList.length > 0){
+    if (rewardList && rewardList.length >= 1){
       data.rewardList = {
         createMany:{
           data:rewardList
@@ -67,11 +67,19 @@ const updateOneProject = async(req,reply)=>{
       projectType
     }
 
-    if (rewardList.length > 0){
+
+    if (rewardList && rewardList?.length > 0){
+      let rewards = rewardList.map((item)=>{
+        return {
+          title:item.title,
+          amount:item.amount,
+          description:item.description
+        }
+      })
       data.rewardList = {
         deleteMany:{},
         createMany:{
-          data:rewardList
+          data:rewards
         }
       }
     }
@@ -110,6 +118,89 @@ const deleteOneProject = async(req,reply)=>{
     reply.send(err) 
   }
 
+}
+
+const getOneProject = async(req,reply)=>{
+  try{
+    const {id} = req.params
+    const targetProject = await prisma.project.findUnique({
+      where:{
+        id
+      },
+      include:{
+        owner:{
+          select:{
+            _count:{
+              select:{
+                projects:true
+              }
+            },
+            user:{
+              select:{
+                firstName:true,
+                lastName:true,
+                avatar:true
+              }
+            }
+          }
+        },
+        _count:{
+          select:{
+            pledgeList:true
+          }
+        },
+        pledgeList:{
+          select:{
+            amount:true
+          }
+        },
+        comments:{
+          select:{
+            backer:{
+              select:{
+                user:{
+                  select:{
+                    firstName:true,
+                    lastName:true,
+                    avatar:true
+                  }
+                }, 
+              }
+            },
+            content:true,
+            replies:{
+              select:{
+                id:true,
+                owner:{
+                  select:{
+                    firstName:true,
+                    lastName:true,
+                    avatar:true,
+                  }
+                },
+                content:true
+              }
+            }
+          },
+          take:50
+        },
+        rewardList:{
+          select:{
+            id:true,
+            title:true,
+            description:true,
+            amount:true
+          }
+        }
+      }
+    })
+    console.log(targetProject)
+    reply.send(targetProject)
+
+  }catch(err){
+    console.log(err)
+    reply.send(err)
+  }
 }
 
 const getAllProjects = async(req,reply)=>{
@@ -226,21 +317,21 @@ const getOneStarterAllProjects = async(req,reply)=>{
                       }, 
                     }
                   },
-                  content:true
+                  content:true,
+                  replies:{
+                    select:{
+                      id:true,
+                      owner:{
+                        select:{
+                          firstName:true,
+                          lastName:true,
+                        }
+                      },
+                      content:true
+                    }
+                  }
                 },
                 take:50,
-                replies:{
-                  select:{
-                    id:true,
-                    owner:{
-                      select:{
-                        firstName:true,
-                        lastName:true,
-                      }
-                    },
-                    content:true
-                  }
-                }
               },
             } 
         })   
@@ -386,6 +477,7 @@ module.exports = {
   createNewProject,
   updateOneProject,
   deleteOneProject,
+  getOneProject,
   getAllProjects,
   getOneStarterAllProjects,
   searchProject,

@@ -94,7 +94,6 @@ const updateOneUserSchema = {
         required: ['firstName','lastName'],
         properties:{
           nationality : {type:'string'},
-          avatar : {type:'string'},
           firstName : {type:'string'},
           lastName : {type:'string'},
         }
@@ -122,7 +121,7 @@ const updateOneUserAvatarSchema = {
       }
     },
     preValidation:userMiddleware,
-    handler:updateOneUser
+    handler:updateOneUserAvatar
 }
 
 module.exports = {

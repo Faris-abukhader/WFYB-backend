@@ -204,7 +204,7 @@ const updateOneUser = async(req,reply)=>{
       const {id} = req.params
 
       // extracting  the data from request body
-      const {firstName,lastName,nationality,avatar} = req.body
+      const {firstName,lastName,nationality} = req.body
 
       // checking if the email is exist or not 
       const targetUser = await prisma.user.update({
@@ -215,7 +215,6 @@ const updateOneUser = async(req,reply)=>{
             firstName,
             lastName,
             nationality,
-            avatar
           },
           include:{ 
               starter:true,
@@ -250,6 +249,8 @@ const updateOneUserAvatar = async(req,reply)=>{
 
       // extracting  the data from request body
       const {avatar} = req.body
+
+      console.log(avatar)
 
       // checking if the email is exist or not 
       const targetUser = await prisma.user.update({

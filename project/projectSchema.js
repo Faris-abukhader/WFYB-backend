@@ -5,7 +5,8 @@ const {
   getAllProjects,
   getOneStarterAllProjects,
   searchProject,
-  getInvestedProjects
+  getInvestedProjects,
+  getOneProject
 } =  require('./projectController')
 
 const { projectObj, rewardObj, backerObj} = require('../util/schemaContainer')
@@ -19,7 +20,7 @@ const createNewProjectSchema = {
     tags: ['project'],
       body: {
         type: 'object',
-        required: ['ownerId','category','country','title','description','shortIntro','projectImage','compaignDurationEnd','fundingGoal','rewardList','risksAndChallenges','projectType'],
+        required: ['ownerId','category','country','title','description','shortIntro','projectImage','compaignDurationEnd','fundingGoal','risksAndChallenges','projectType'],
         properties:{
           ownerId : {type:'string'},
           category : {type:'string'},
@@ -53,7 +54,7 @@ const updateOneProjectSchema = {
     tags: ['project'],
       body: {
         type: 'object',
-        required: ['category','country','title','description','shortIntro','projectImage','compaignDurationEnd','fundingGoal','rewardList','risksAndChallenges','projectType'],
+        required: ['category','country','title','description','shortIntro','projectImage','compaignDurationEnd','fundingGoal','risksAndChallenges','projectType'],
         properties:{
           category : {type:'string'},
           country : {type:'string'},
@@ -98,6 +99,23 @@ const deleteOneProjectSchema = {
     },
   preValidation:starterMiddleware,
   handler:deleteOneProject
+}
+
+const getOneProjectSchema = {
+  schema: {
+    tags: ['project'],
+      params: {
+        type: 'object',
+        required:['id'],
+        properties:{
+          id : {type:'string'},
+          pageNumber : {type:'integer'},
+        }
+      },
+      response:200,
+    },
+  preValidation:websiteMiddleware,
+  handler:getOneProject
 }
 
 const getAllProjectsSchema = {
@@ -151,7 +169,7 @@ const getOneStarterAllProjectsSchema = {
         }
       },
     },
-  preValidation:websiteMiddleware,
+  preValidation:starterMiddleware,
   handler:getOneStarterAllProjects
 }
 
@@ -208,6 +226,7 @@ module.exports = {
   createNewProjectSchema,
   updateOneProjectSchema,
   deleteOneProjectSchema,
+  getOneProjectSchema,
   getAllProjectsSchema,
   getOneStarterAllProjectsSchema,
   searchProjectSchema,

@@ -2,6 +2,7 @@ const {
   createNewProjectSchema,
   updateOneProjectSchema,
   deleteOneProjectSchema,
+  getOneProjectSchema,
   getAllProjectsSchema,
   getOneStarterAllProjectsSchema,
   searchProjectSchema,
@@ -23,6 +24,8 @@ const projectRoutes = async(fastify, options, done)=> {
     fastify.get('/investedProject/:id/:pageNumber?', getInvestedProjectsSchema)
 
     fastify.get('/search/:pageNumber?', searchProjectSchema)
+
+    fastify.get('/:id', getOneProjectSchema)
     
 }
   

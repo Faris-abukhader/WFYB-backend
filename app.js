@@ -17,6 +17,11 @@ try{
   console.log(err)
 }
 
+fastify.register(require('@fastify/cors',{
+  origin:'*'
+}))
+
+
 // routes . . . 
 fastify.register(require('./auth/authRoute'),{ prefix: '/auth' })
 fastify.register(require('./starter/starterRoute'),{ prefix: '/starter' })
