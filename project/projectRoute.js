@@ -6,7 +6,8 @@ const {
   getAllProjectsSchema,
   getOneStarterAllProjectsSchema,
   searchProjectSchema,
-  getInvestedProjectsSchema
+  getInvestedProjectsSchema,
+  investedProjectStatsticsSchema
 } = require('./projectSchema')
 
 const projectRoutes = async(fastify, options, done)=> {
@@ -23,7 +24,9 @@ const projectRoutes = async(fastify, options, done)=> {
 
     fastify.get('/investedProject/:id/:pageNumber?', getInvestedProjectsSchema)
 
-    fastify.get('/search/:pageNumber?', searchProjectSchema)
+    fastify.get('/investedProject/statistics/:id/:pageNumber?', investedProjectStatsticsSchema)
+
+    fastify.get('/search', searchProjectSchema)
 
     fastify.get('/:id', getOneProjectSchema)
     

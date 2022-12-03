@@ -30,7 +30,7 @@ const addToMarkbook = async(req,reply)=>{
 
 const deleteOneMarkbook = async(req,reply)=>{
   try{
-    const {id} = req.body
+    const {id} = req.params
     const targetBookmark = await prisma.bookmark.delete({
       where:{
         id
@@ -53,6 +53,7 @@ const getOneUserAllMarkbooks = async(req,reply)=>{
       select:{
         bookmarks:{
           select:{
+            id:true,
             project:{
               select:{
                 id:true,

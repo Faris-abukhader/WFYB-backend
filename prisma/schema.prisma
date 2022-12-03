@@ -17,7 +17,7 @@ model User {
   firstName     String
   lastName      String
   nationality   String?
-  avatar        String
+  avatar        String   @default("avatar-1.svg")
   accountType   String
   isVerified    Boolean?
   verifiedDate  DateTime?
@@ -33,7 +33,7 @@ model User {
 model Starter {
   userId            String   @id @default(cuid())
   user              User @relation(fields: [userId],references: [id])
-  shortIntro        String @db.Text
+  shortIntro        String? @db.Text
   projects          Project[]
 }
 
@@ -88,6 +88,7 @@ model Pledge {
   reward                 Reward? @relation(fields: [rewardId],references: [id])
   country                String
   amount                 Decimal
+  createdAt              DateTime @default(now())         
 }
 
 model Comment {

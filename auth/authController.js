@@ -3,9 +3,9 @@ const prisma = new PrismaClient()
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
-const {sendEmail} = require('../util/emailConfig/sendInBlue')
+// const {sendEmail} = require('../util/emailConfig/sendInBlue')
 const {getTargetScript} = require('../util/emailConfig/script')
-
+const {userRepository} = require('../redis/schema/user')
 
 const signUp = async(req,reply)=>{
     try{
@@ -26,6 +26,8 @@ const signUp = async(req,reply)=>{
             firstName,
             lastName,
             token:'',
+            isVerified:true,
+            verifiedDate:new Date()
         }
         let include = {}
 
@@ -70,8 +72,12 @@ const signUp = async(req,reply)=>{
         })
 
 
+        try{
         // sending email to user to verify his account
-        sendEmail([{email}],getTargetScript('verify').emailTitle,'verify',process.env.API_URL,token,`${firstName + ' ' + lastName}`)
+        // sendEmail([{email}],getTargetScript('verify').emailTitle,'verify',process.env.API_URL,token,`${firstName + ' ' + lastName}`)
+        }catch(err){
+          console.log(err)
+        }
         
         reply.send(user)  
 
@@ -97,7 +103,7 @@ const resendVerifyingEmail = async(req,reply)=>{
 
 
         // sending verifying emial to target email
-        sendEmail([{email}],getTargetScript('verify').emailTitle,'verify',process.env.API_URL,token,`${targetUser.firstName + ' ' + targetUser.lastName}`)
+        // sendEmail([{email}],getTargetScript('verify').emailTitle,'verify',process.env.API_URL,token,`${targetUser.firstName + ' ' + targetUser.lastName}`)
 
         reply.send({message:'resendEmailVerifySendSuccessfully'})
 
@@ -169,7 +175,7 @@ const verify = async(req,reply)=>{
 
 
         // updating the user and make it verified
-        await prisma.user.update({
+        const user = await prisma.user.update({
             where:{
                 id:targetId
             },
@@ -178,6 +184,9 @@ const verify = async(req,reply)=>{
                 verifiedDate: new Date()  
             }
         })
+
+        // saving user to redis DB
+        // userRepository.createAndSave({email:user.email,password:user.password})
 
         // return html page for redirect to target frontend auth page 
         reply.type('text/html').send(`

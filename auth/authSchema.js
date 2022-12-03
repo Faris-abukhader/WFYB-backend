@@ -60,7 +60,7 @@ const verifySchema = {
     tags: ['auth'],
       response:200
     },
-    preValidation:websiteMiddleware,
+    // preValidation:websiteMiddleware,
     handler:verify
 }
 

@@ -4,13 +4,13 @@ const {
   getOneUserAllMarkbooks,
 } =  require('./bookmarkController')
 
-const { bookmarkObj} = require('../util/schemaContainer')
+const { bookmarkObj, backerObj} = require('../util/schemaContainer')
 const { backerMiddleware } = require('../preValidation/backerMiddleware')
 
 
 const addToMarkbookSchema = {
   schema: {
-    tags: ['project'],
+    tags: ['bookmark'],
       body: {
         type: 'object',
         required: ['backerId','projectId'],
@@ -29,7 +29,7 @@ const addToMarkbookSchema = {
 
 const deleteOneMarkbookSchema = {
   schema: {
-    tags: ['project'],
+    tags: ['bookmark'],
       params: {
         type: 'object',
         required: ['id'],
@@ -47,7 +47,7 @@ const deleteOneMarkbookSchema = {
 
 const getOneBackerAllBookmarksSchema = {
   schema: {
-    tags: ['project'],
+    tags: ['bookmark'],
       params: {
         type: 'object',
         required:['id'],
@@ -55,12 +55,7 @@ const getOneBackerAllBookmarksSchema = {
           id : {type:'string'},
         }
       },
-      response: {
-        200:{
-          type: 'array',
-          items:bookmarkObj
-        }
-      },
+      response:200,
     },
   preValidation:backerMiddleware,
   handler:getOneUserAllMarkbooks

@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 4500
 const fastify = Fastify({logger: true})
 const { docOptions } = require('./util/docGeneratorOptions')
 
-
 const buildUpDocs = async (options) => {
   await fastify.register(require('@fastify/swagger'), options)
 }
@@ -20,6 +19,27 @@ try{
 fastify.register(require('@fastify/cors',{
   origin:'*'
 }))
+
+
+// fastify.register(require('@fastify/redis'), { 
+//   host: '127.0.0.1', 
+//   port: 6379, // Redis port
+//   family: 4   // 4 (IPv4) or 6 (IPv6)
+// })
+
+// fastify.post('/test-redis', (req, reply) => {
+//   const { redis } = fastify
+//   redis.set(req.body.key, req.body.value, (err) => {
+//     reply.send(err || { status: 'ok' })
+//   })
+// })
+
+// fastify.get('/test-redis', (req, reply) => {
+//   const { redis } = fastify
+//   redis.get(req.query.key, (err, val) => {
+//     reply.send(err || val)
+//   })
+// })
 
 
 // routes . . . 
