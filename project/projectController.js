@@ -5,7 +5,6 @@ const {projectRange,pledgeRange} = require('../util/paginationRange')
 const createNewProject = async(req,reply)=>{
   try{
     const {ownerId,category,country,title,description,shortIntro,projectImage,compaignDurationEnd,fundingGoal,rewardList,risksAndChallenges,projectType} = req.body
-
     let data = {
       owner:{
         connect:{

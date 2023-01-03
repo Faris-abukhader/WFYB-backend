@@ -122,8 +122,17 @@ const createbacker = async()=>{
   })
   console.log(target)
 }
-
+const getAllUser = async()=>{
+  // await prisma.user.updateMany({
+  //   data:{
+  //     isVerified:true,
+  //     verifiedDate:new Date()
+  //   }
+  // })
+  // const users = await prisma.user.findMany({})
+  // console.log(users)
+}
 // createStarter()
 // createbacker()
-
+// getAllUser()
 // console.log(new Date())

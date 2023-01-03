@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 // const {sendEmail} = require('../util/emailConfig/sendInBlue')
 const {getTargetScript} = require('../util/emailConfig/script')
-const {userRepository} = require('../redis/schema/user')
 
 const signUp = async(req,reply)=>{
     try{
@@ -184,9 +183,6 @@ const verify = async(req,reply)=>{
                 verifiedDate: new Date()  
             }
         })
-
-        // saving user to redis DB
-        // userRepository.createAndSave({email:user.email,password:user.password})
 
         // return html page for redirect to target frontend auth page 
         reply.type('text/html').send(`
