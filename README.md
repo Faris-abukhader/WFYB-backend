@@ -5,7 +5,7 @@ WFYB
 📔<a href="https://github.com/Faris-abukhader/WFYB-backend/blob/master/README_ar.md"> بالعربي </a>📔 
  </p>
 <p align="center">
- front-end part coming soon ...
+ front-end part <a href="https://github.com/Faris-abukhader/WFYB-frontend">from here</>
 </p>
 
 
